@@ -1,0 +1,5 @@
+src/
+example/
+.editorconfig
+.babelrc
+prettier.config.js

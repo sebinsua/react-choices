@@ -1,3 +1,12 @@
+export const KEYCODE = {
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39,
+  UP: 38,
+
+  ESC: 27
+}
+
 export function compose(...funcs) {
   if (funcs.length === 0) {
     return arg => arg

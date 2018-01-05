@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withRenderProp, withLifecycleStateLogic } from 'conventional-component'
+import { KEYCODE } from './utils'
 
 import ChoicesDisplay from './ChoicesDisplay'
 
@@ -12,15 +13,6 @@ const createStates = (availableStates = []) => {
   }))
 }
 
-const KEYCODE = {
-  DOWN: 40,
-  LEFT: 37,
-  RIGHT: 39,
-  UP: 38,
-
-  ESC: 27
-}
-
 class EventDetectionContainer extends Component {
   setContainer = ref => (this.container = ref)
 
@@ -29,21 +21,7 @@ class EventDetectionContainer extends Component {
 
     let handle = () => undefined
     if (isActiveControl) {
-      switch (event.keyCode) {
-        case KEYCODE.DOWN:
-        case KEYCODE.LEFT:
-          handle = this.props.focusPreviousValue
-          break
-        case KEYCODE.UP:
-        case KEYCODE.RIGHT:
-          handle = this.props.focusNextValue
-          break
-        case KEYCODE.ESC:
-          handle = this.props.resetValue
-          break
-        default:
-          break
-      }
+      handle = this.props.getKeyCodeHandler(event.keyCode)
     }
 
     return handle(event)
@@ -52,7 +30,7 @@ class EventDetectionContainer extends Component {
   unfocusWhenOutside = event => {
     const isActiveControl = this.container.contains(document.activeElement)
     if (!isActiveControl) {
-      this.props.setValue(undefined, null)
+      this.props.unfocusValue()
     }
   }
 
@@ -108,6 +86,8 @@ function withLogic(Template = ChoicesDisplay) {
       this.props.setValue(value)
     }
 
+    unfocusValue = this.setValue.bind(undefined, null)
+
     hoverValue = (value, event) => {
       event && event.preventDefault()
       this.props.hoverValue(value)
@@ -161,10 +141,21 @@ function withLogic(Template = ChoicesDisplay) {
 
       return (
         <EventDetectionContainer
-          focusPreviousValue={this.focusPreviousValue}
-          focusNextValue={this.focusNextValue}
-          setValue={this.setValue}
-          resetValue={this.resetValue}
+          getKeyCodeHandler={keyCode => {
+            switch (keyCode) {
+              case KEYCODE.DOWN:
+              case KEYCODE.LEFT:
+                return this.focusPreviousValue
+              case KEYCODE.UP:
+              case KEYCODE.RIGHT:
+                return this.focusNextValue
+              case KEYCODE.ESC:
+                return this.resetValue
+              default:
+                return () => undefined
+            }
+          }}
+          unfocusValue={this.unfocusValue}
         >
           {children}
         </EventDetectionContainer>

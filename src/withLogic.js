@@ -34,6 +34,10 @@ class EventDetectionContainer extends Component {
     }
   }
 
+  unhoverWhenOutside = event => {
+    this.props.unhoverValue()
+  }
+
   componentDidMount() {
     document.addEventListener('keydown', this.keyboardListener)
     document.addEventListener('focusin', this.unfocusWhenOutside)
@@ -47,7 +51,11 @@ class EventDetectionContainer extends Component {
   render() {
     const { children } = this.props
     return (
-      <div className="EventDetection-container" ref={this.setContainer}>
+      <div
+        className="EventDetection-container"
+        ref={this.setContainer}
+        onMouseOut={this.unhoverWhenOutside}
+      >
         {children}
       </div>
     )
@@ -86,12 +94,14 @@ function withLogic(Template = ChoicesDisplay) {
       this.props.setValue(value)
     }
 
-    unfocusValue = this.setValue.bind(undefined, null)
+    unfocusValue = this.setValue.bind(null, undefined)
 
     hoverValue = (value, event) => {
       event && event.preventDefault()
       this.props.hoverValue(value)
     }
+
+    unhoverValue = this.hoverValue.bind(null, undefined)
 
     focusPreviousValue = event => {
       event && event.preventDefault()
@@ -156,6 +166,7 @@ function withLogic(Template = ChoicesDisplay) {
             }
           }}
           unfocusValue={this.unfocusValue}
+          unhoverValue={this.unhoverValue}
         >
           {children}
         </EventDetectionContainer>

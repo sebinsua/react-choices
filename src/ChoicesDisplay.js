@@ -12,7 +12,7 @@ const ChoicesDisplay = ({
   previousValue,
   nextValue
 }) => (
-  <div onMouseOut={hoverValue.bind(null, undefined)}>
+  <div className="choices">
     <button onClick={previousValue}>{'<'}</button>
     {states.map((state, idx) => (
       <button

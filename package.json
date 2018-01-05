@@ -1,8 +1,7 @@
 {
   "name": "react-choices",
-  "version": "0.0.1",
-  "description":
-    "Component to build simple, flexible, and accessible choice components",
+  "version": "0.1.0",
+  "description": "Component to build simple, flexible, and accessible choice components",
   "entry": "src/index.js",
   "main": "index.js",
   "module": "index.mjs",
@@ -29,7 +28,10 @@
   },
   "homepage": "https://github.com/sebinsua/react-choices#readme",
   "lint-staged": {
-    "*.{js,jsx}": ["prettier --write", "git add"]
+    "*.{js,jsx}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "scripts": {
     "commitmsg": "commitlint -e",

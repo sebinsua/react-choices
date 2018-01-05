@@ -144,7 +144,11 @@ function withLogic(Template = ChoicesDisplay) {
         typeof this.props.render === 'function' ||
         typeof this.props.children === 'function'
       ) {
-        children = withRenderProp(templateProps)
+        children = withRenderProp({
+          ...templateProps,
+          render: this.props.render,
+          children: this.props.children
+        })
       } else if (Template) {
         children = <Template {...templateProps} />
       }

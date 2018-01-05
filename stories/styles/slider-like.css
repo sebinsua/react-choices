@@ -1,0 +1,115 @@
+.speed-choices-container {
+  position: relative;
+  width: 120px;
+
+  padding: 5px; /* TODO: This is temporary... */
+}
+.speed-choices-background {
+  position: absolute;
+
+  display: flex;
+  z-index: -1;
+
+  height: 14px;
+  width: 100%;
+}
+.speed-choices-horizontal-bar {
+  align-self: center;
+  background-color: lightgrey;
+  display: block;
+  z-index: -1;
+  height: 2px;
+  width: 100%;
+}
+
+.speed-choices {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.speed-choice {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  height: 100%;
+  flex: 1 0 10%;
+
+  cursor: pointer;
+}
+.speed-choice__not-settable {
+  visibility: hidden;
+  cursor: default;
+}
+.speed-choice__input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.speed-choice__input {
+  align-self: center;
+  background-color: #beccdc;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+
+  height: 4px;
+  width: 4px;
+
+  margin-left: -2px;
+}
+.speed-choice__input:active {
+  padding: 0;
+}
+.speed-choice:first-child {
+  flex: 0 0 4px;
+}
+.speed-choice:first-child .speed-choice__input {
+  align-self: flex-start;
+}
+.speed-choice:last-child {
+  flex: 0 0 4px;
+}
+.speed-choice:last-child .speed-choice__input {
+  align-self: flex-end;
+}
+
+.speed-choice__label {
+  display: none;
+}
+.speed-choice__hovered .speed-choice__input {
+  border: 2px solid lightblue;
+  border-radius: 8px;
+
+  height: 8px;
+  width: 8px;
+
+  margin-left: -4px;
+}
+
+.speed-choice__focused .speed-choice__input {
+  display: inline-block;
+  border: 2px solid lightgreen;
+}
+.speed-choice__input::-moz-focus-inner {
+  border: 0;
+  outline: none;
+}
+
+.speed-choice__selected .speed-choice__input {
+  background-color: red;
+  border-radius: 14px;
+  color: white;
+
+  height: 14px;
+  width: 14px;
+
+  margin-left: -7px;
+}
+.speed-choice__selected .speed-choice__label {
+  display: block;
+  color: white;
+  font-size: 8px;
+}

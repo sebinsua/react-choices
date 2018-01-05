@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames-es'
 
-const StateControlDisplay = ({
+const ChoicesDisplay = ({
   states,
   defaultValue,
   focusedValue,
@@ -16,13 +16,13 @@ const StateControlDisplay = ({
     <button onClick={previousValue}>{'<'}</button>
     {states.map((state, idx) => (
       <button
-        key={`item-${idx}`}
-        id={`item-${state.value}`}
+        key={`choice-${idx}`}
+        id={`choice-${state.value}`}
         tabIndex={state.value === selectedValue ? 0 : -1}
-        className={cx('item', state.inputClassName, {
-          item__focused: state.value === focusedValue,
-          item__hovered: state.value === hoveredValue,
-          item__selected: state.value === (selectedValue || defaultValue)
+        className={cx('choice', state.inputClassName, {
+          choice__focused: state.value === focusedValue,
+          choice__hovered: state.value === hoveredValue,
+          choice__selected: state.value === (selectedValue || defaultValue)
         })}
         onMouseOver={hoverValue.bind(null, state.value)}
         onClick={setValue.bind(null, state.value)}
@@ -34,4 +34,4 @@ const StateControlDisplay = ({
   </div>
 )
 
-export default StateControlDisplay
+export default ChoicesDisplay

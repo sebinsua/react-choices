@@ -4,7 +4,7 @@ import {
   withLifecycleStateLogic
 } from 'conventional-component'
 
-import StateControlDisplay from './StateControlDisplay'
+import ChoicesDisplay from './ChoicesDisplay'
 
 const KEYCODE = {
   DOWN: 40,
@@ -15,7 +15,7 @@ const KEYCODE = {
   ESC: 27
 }
 
-const toInputClassName = state => `StateControl__input-${state.value}`
+const toInputClassName = state => `Choices__input-${state.value}`
 
 const createStates = (availableStates = []) => {
   return availableStates.map(availableState => ({
@@ -24,8 +24,8 @@ const createStates = (availableStates = []) => {
   }))
 }
 
-function withLogic(Template = StateControlDisplay) {
-  class StateControl extends Component {
+function withLogic(Template = ChoicesDisplay) {
+  class Choices extends Component {
     keyboardListener = event => {
       const isActiveControl = this.container.contains(document.activeElement)
 
@@ -158,7 +158,7 @@ function withLogic(Template = StateControlDisplay) {
 
   return withLifecycleStateLogic({
     shouldDispatchReceiveNextProps: false
-  })(StateControl)
+  })(Choices)
 }
 
 export default withLogic

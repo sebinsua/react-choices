@@ -1,6 +1,6 @@
 import { withActionIdentity } from 'conventional-component'
 
-const prefix = 'StateControl'
+const prefix = 'Choices'
 
 export const SET_VALUE = `${prefix}/SET_VALUE`
 export const HOVER_VALUE = `${prefix}/HOVER_VALUE`

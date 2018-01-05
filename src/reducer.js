@@ -1,7 +1,7 @@
 import { INIT, RECEIVE_NEXT_PROPS } from 'conventional-component'
 import { SET_VALUE, PREVIOUS_VALUE, NEXT_VALUE, HOVER_VALUE } from './actions'
 
-const REDUCER_NAME = 'stateControl'
+const REDUCER_NAME = 'choices'
 
 const initialState = {
   name: undefined,
@@ -14,6 +14,8 @@ const initialState = {
 
 const firstValue = (availableStates = []) => (availableStates[0] || {}).value
 
+const isSettable = state => state.settable !== false
+
 const getPreviousValue = state => {
   const currentValue = state.focusedValue || state.selectedValue
   const currentStateIndex = state.availableStates.findIndex(
@@ -23,10 +25,7 @@ const getPreviousValue = state => {
   if (currentStateIndex > 0) {
     let previousSettableIndex = -1
     for (let idx = state.availableStates.length; idx >= 0; idx--) {
-      if (
-        idx < currentStateIndex &&
-        state.availableStates[idx].settable !== false
-      ) {
+      if (idx < currentStateIndex && isSettable(state.availableStates[idx])) {
         previousSettableIndex = idx
         break
       }
@@ -49,10 +48,7 @@ const getNextValue = state => {
   if (currentStateIndex < state.availableStates.length - 1) {
     let nextSettableIndex = -1
     for (let idx = 0; idx < state.availableStates.length; idx++) {
-      if (
-        idx > currentStateIndex &&
-        state.availableStates[idx].settable !== false
-      ) {
+      if (idx > currentStateIndex && isSettable(state.availableStates[idx])) {
         nextSettableIndex = idx
         break
       }
@@ -126,7 +122,7 @@ const reducer = (state = initialState, action) => {
         as => as.value === value
       )
 
-      if (availableState && availableState.settable !== false) {
+      if (availableState && isSettable(availableState)) {
         return { ...state, selectedValue: value, focusedValue: value }
       } else if (value === undefined) {
         return { ...state, focusedValue: undefined }

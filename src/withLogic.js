@@ -1,19 +1,7 @@
 import React, { Component } from 'react'
-import {
-  receiveChildrenAsFunction,
-  withLifecycleStateLogic
-} from 'conventional-component'
+import { withRenderProp, withLifecycleStateLogic } from 'conventional-component'
 
 import ChoicesDisplay from './ChoicesDisplay'
-
-const KEYCODE = {
-  DOWN: 40,
-  LEFT: 37,
-  RIGHT: 39,
-  UP: 38,
-
-  ESC: 27
-}
 
 const toInputClassName = state => `Choices__input-${state.value}`
 
@@ -24,50 +12,72 @@ const createStates = (availableStates = []) => {
   }))
 }
 
+const KEYCODE = {
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39,
+  UP: 38,
+
+  ESC: 27
+}
+
+class EventDetectionContainer extends Component {
+  setContainer = ref => (this.container = ref)
+
+  keyboardListener = event => {
+    const isActiveControl = this.container.contains(document.activeElement)
+
+    let handle = () => undefined
+    if (isActiveControl) {
+      switch (event.keyCode) {
+        case KEYCODE.DOWN:
+        case KEYCODE.LEFT:
+          handle = this.props.focusPreviousValue
+          break
+        case KEYCODE.UP:
+        case KEYCODE.RIGHT:
+          handle = this.props.focusNextValue
+          break
+        case KEYCODE.ESC:
+          handle = this.props.resetValue
+          break
+        default:
+          break
+      }
+    }
+
+    return handle(event)
+  }
+
+  unfocusWhenOutside = event => {
+    const isActiveControl = this.container.contains(document.activeElement)
+    if (!isActiveControl) {
+      this.props.setValue(undefined, null)
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.keyboardListener)
+    document.addEventListener('focusin', this.unfocusWhenOutside)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.keyboardListener)
+    document.removeEventListener('focusin', this.unfocusWhenOutside)
+  }
+
+  render() {
+    const { children } = this.props
+    return (
+      <div className="EventDetection-container" ref={this.setContainer}>
+        {children}
+      </div>
+    )
+  }
+}
+
 function withLogic(Template = ChoicesDisplay) {
   class Choices extends Component {
-    keyboardListener = event => {
-      const isActiveControl = this.container.contains(document.activeElement)
-
-      let handle = () => undefined
-      if (isActiveControl) {
-        switch (event.keyCode) {
-          case KEYCODE.DOWN:
-          case KEYCODE.LEFT:
-            handle = this.focusPreviousValue
-            break
-          case KEYCODE.UP:
-          case KEYCODE.RIGHT:
-            handle = this.focusNextValue
-            break
-          case KEYCODE.ESC:
-            handle = this.resetValue
-            break
-          default:
-            break
-        }
-      }
-
-      return handle(event)
-    }
-
-    unfocusWhenOutside = event => {
-      const isActiveControl = this.container.contains(document.activeElement)
-      if (!isActiveControl) {
-        this.props.setValue(undefined)
-      }
-    }
-
-    componentDidMount() {
-      document.addEventListener('keydown', this.keyboardListener)
-      document.addEventListener('focusin', this.unfocusWhenOutside)
-    }
-
-    componentWillUnmount() {
-      document.removeEventListener('keydown', this.keyboardListener)
-      document.removeEventListener('focusin', this.unfocusWhenOutside)
-    }
-
     componentWillReceiveProps(nextProps) {
       const hasNewSelectedValue =
         this.props.selectedValue &&
@@ -79,8 +89,6 @@ function withLogic(Template = ChoicesDisplay) {
         this.focusInputElement(nextProps.focusedValue)
       }
     }
-
-    setContainer = ref => (this.container = ref)
 
     focusInputElement = value => {
       const el = (document.getElementsByClassName(
@@ -96,32 +104,32 @@ function withLogic(Template = ChoicesDisplay) {
     }
 
     setValue = (value, event) => {
-      event.preventDefault()
+      event && event.preventDefault()
       this.props.setValue(value)
     }
 
     hoverValue = (value, event) => {
-      event.preventDefault()
+      event && event.preventDefault()
       this.props.hoverValue(value)
     }
 
     focusPreviousValue = event => {
-      event.preventDefault()
+      event && event.preventDefault()
       this.props.previousValue(false)
     }
 
     focusNextValue = event => {
-      event.preventDefault()
+      event && event.preventDefault()
       this.props.nextValue(false)
     }
 
     previousValue = event => {
-      event.preventDefault()
+      event && event.preventDefault()
       this.props.previousValue(true)
     }
 
     nextValue = event => {
-      event.preventDefault()
+      event && event.preventDefault()
       this.props.nextValue(true)
     }
 
@@ -142,16 +150,24 @@ function withLogic(Template = ChoicesDisplay) {
       }
 
       let children = null
-      if (typeof this.props.children === 'function') {
-        children = receiveChildrenAsFunction(templateProps)
+      if (
+        typeof this.props.render === 'function' ||
+        typeof this.props.children === 'function'
+      ) {
+        children = withRenderProp(templateProps)
       } else if (Template) {
         children = <Template {...templateProps} />
       }
 
       return (
-        <div className="KeyDetection-container" ref={this.setContainer}>
+        <EventDetectionContainer
+          focusPreviousValue={this.focusPreviousValue}
+          focusNextValue={this.focusNextValue}
+          setValue={this.setValue}
+          resetValue={this.resetValue}
+        >
           {children}
-        </div>
+        </EventDetectionContainer>
       )
     }
   }

@@ -168,6 +168,7 @@ function withLogic(Template = ChoicesDisplay) {
 
       const templateProps = {
         name: this.props.name,
+        label: this.props.label,
         states: createStates(this.props, this.props.availableStates),
         defaultValue: this.props.defaultValue,
         focusedValue: this.props.focusedValue,
@@ -211,6 +212,7 @@ function withLogic(Template = ChoicesDisplay) {
   return withLifecycleStateLogic({
     shouldDispatchReceiveNextProps: whenDifferent([
       'name',
+      'label',
       'availableStates',
       'defaultValue',
       'selectedValue'

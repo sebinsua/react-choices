@@ -4,7 +4,8 @@
 
   padding: 5px; /* TODO: This is temporary... */
 }
-.speed-choices-background {
+
+.speed-choices__background {
   position: absolute;
 
   display: flex;
@@ -24,6 +25,13 @@
 
 .speed-choices {
   position: absolute;
+  width: 100%;
+}
+.speed-choices__label {
+  display: none;
+}
+.speed-choices__items {
+  position: absolute;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -37,7 +45,7 @@
 
   cursor: pointer;
 }
-.speed-choice__not-settable:not(.speed-choice__selected) {
+.speed-choice--not-settable:not(.speed-choice__selected) {
   visibility: hidden;
   cursor: default;
 }
@@ -80,7 +88,7 @@
 .speed-choice__label {
   display: none;
 }
-.speed-choice__hovered .speed-choice__input {
+.speed-choice--hovered .speed-choice__input {
   border: 2px solid lightblue;
   border-radius: 8px;
 
@@ -90,7 +98,7 @@
   margin-left: -4px;
 }
 
-.speed-choice__focused .speed-choice__input, .speed-choice__input:focus {
+.speed-choice--focused .speed-choice__input, .speed-choice__input:focus {
   display: inline-block;
   border: 2px solid lightgreen;
 }
@@ -99,7 +107,7 @@
   outline: none;
 }
 
-.speed-choice__selected .speed-choice__input {
+.speed-choice--selected .speed-choice__input {
   background-color: red;
   border-radius: 14px;
   color: white;
@@ -109,7 +117,7 @@
 
   margin-left: -7px;
 }
-.speed-choice__selected .speed-choice__label {
+.speed-choice--selected .speed-choice__label {
   display: block;
   color: white;
   font-size: 8px;

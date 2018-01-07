@@ -5,6 +5,7 @@ const REDUCER_NAME = 'choices'
 
 const initialState = {
   name: undefined,
+  label: undefined,
   availableStates: [],
   defaultValue: undefined,
   focusedValue: undefined,
@@ -69,6 +70,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         name: action.payload.name,
+        label: action.payload.label,
         availableStates,
         defaultValue: action.payload.defaultValue,
         selectedValue:
@@ -79,6 +81,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         name: action.payload.name,
+        label: action.payload.label,
         availableStates: action.payload.availableStates,
         defaultValue: action.payload.defaultValue,
         selectedValue: action.payload.selectedValue

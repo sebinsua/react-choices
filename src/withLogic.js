@@ -25,9 +25,18 @@ const defaultGetKeyCodeHandler = (keyCode, parentInstance) => {
   }
 }
 
-const createStates = (availableStates = []) => {
+const createStates = (props = {}, availableStates = []) => {
   return availableStates.map(availableState => ({
     ...availableState,
+    label:
+      typeof availableState.label !== 'undefined'
+        ? availableState.label
+        : availableState.value,
+    notSettable: availableState.settable === false,
+    focused: availableState.value === props.focusedValue,
+    hovered: availableState.value === props.hoveredValue,
+    selected:
+      availableState.value === (props.selectedValue || props.defaultValue),
     inputClassName: toInputClassName(availableState)
   }))
 }
@@ -159,7 +168,7 @@ function withLogic(Template = ChoicesDisplay) {
 
       const templateProps = {
         name: this.props.name,
-        states: createStates(this.props.availableStates),
+        states: createStates(this.props, this.props.availableStates),
         defaultValue: this.props.defaultValue,
         focusedValue: this.props.focusedValue,
         hoveredValue: this.props.hoveredValue,

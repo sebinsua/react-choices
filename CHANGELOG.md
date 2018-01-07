@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/sebinsua/react-choices/compare/v0.1.3...v0.2.0) (2018-01-07)
+
+
+### Bug Fixes
+
+* css focus style required when tabbing in ([a783f56](https://github.com/sebinsua/react-choices/commit/a783f56))
+
+
+### Features
+
+* configurable getKeyCodeHandler ([cb85f70](https://github.com/sebinsua/react-choices/commit/cb85f70))
+
+
+
 <a name="0.1.3"></a>
 ## [0.1.3](https://github.com/sebinsua/react-choices/compare/v0.1.2...v0.1.3) (2018-01-07)
 

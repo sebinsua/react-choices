@@ -1,3 +1,6 @@
+.choices__label {
+  display: none;
+}
 .choice {
   background-color: lightgrey;
 }
@@ -5,13 +8,13 @@
   outline-color: transparent;
   outline-style: none;
 }
-.choice.choice__selected {
+.choice.choice--selected {
   background-color: red;
   color: white;
 }
-.choice.choice__hovered {
+.choice.choice--hovered {
   border: 2px solid lightblue;
 }
-.choice.choice__focused {
+.choice.choice--focused, .choice:focus {
   border: 2px solid lightgreen;
 }

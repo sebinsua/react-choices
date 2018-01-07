@@ -16,6 +16,7 @@ choices.add('with default template', () => (
     <input type="text" name="thing_2" defaultValue="fields" />
     <Choices
       name="basic_speed"
+      label="Speed"
       availableStates={[
         { value: '<S', settable: false },
         { value: 'S' },
@@ -115,13 +116,13 @@ choices.add('with slider-like template', () => {
                 {states.map((state, idx) => (
                   <SpeedChoice
                     key={`speed-choice-${idx}`}
+                    id={`speed-choice-${state.value}`}
                     value={state.value}
                     label={state.label}
                     notSettable={state.notSettable}
                     focused={state.focused}
                     hovered={state.hovered}
                     selected={state.selected}
-                    id={`speed-choice-${state.value}`}
                     inputClassName={state.inputClassName}
                     onMouseOver={hoverValue.bind(null, state.value)}
                     onClick={setValue.bind(null, state.value)}

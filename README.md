@@ -8,12 +8,9 @@ You want a radio component that's simple and gives you complete control over ren
 
 ## The solution
 
-`Choices` is a [`conventional-component` compatible](https://github.com/sebinsua/conventional-component) `React` component, that follows the patterns of [`react-toggled`](https://github.com/kentcdodds/react-toggled#this-solution) to expose an API that renders nothing and simply encapsulates the logic of a radio component.
+`Choices` is a [`conventional-component` compatible](https://github.com/sebinsua/conventional-component) React component, that follows the patterns of [`react-toggled`](https://github.com/kentcdodds/react-toggled#this-solution) to expose an API that renders nothing and simply encapsulates the logic of a radio component.
 
 ## Installation
-
-This module is distributed via [npm][npm] which is bundled with [node][node] and
-should be installed as one of your project's `dependencies`:
 
 ```
 npm install --save react-choices

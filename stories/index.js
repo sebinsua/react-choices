@@ -12,8 +12,8 @@ const choices = storiesOf('Choices', module)
 
 choices.add('with default template', () => (
   <div className="choices__container">
-    <input type="text" name="thing_1" value="unrelated" />
-    <input type="text" name="thing_2" value="fields" />
+    <input type="text" name="thing_1" defaultValue="unrelated" />
+    <input type="text" name="thing_2" defaultValue="fields" />
     <Choices
       name="basic_speed"
       availableStates={[
@@ -32,8 +32,8 @@ choices.add('with default template', () => (
 
 choices.add('with slider-like template', () => (
   <div className="choices__container">
-    <input type="text" name="thing_1" value="unrelated" />
-    <input type="text" name="thing_2" value="fields" />
+    <input type="text" name="thing_1" defaultValue="unrelated" />
+    <input type="text" name="thing_2" defaultValue="fields" />
     <Choices
       name="slider_like_speed"
       availableStates={[
@@ -54,9 +54,7 @@ choices.add('with slider-like template', () => (
         hoveredValue,
         selectedValue,
         setValue,
-        hoverValue,
-        previousValue,
-        nextValue
+        hoverValue
       }) => (
         <div className="speed-choices-container">
           <div className="speed-choices">

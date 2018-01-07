@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRenderProp, withLifecycleStateLogic } from 'conventional-component'
-import { KEYCODE } from './utils'
+import { KEYCODE, whenDifferent } from './utils'
 
 import ChoicesDisplay from './ChoicesDisplay'
 
@@ -179,7 +179,12 @@ function withLogic(Template = ChoicesDisplay) {
   }
 
   return withLifecycleStateLogic({
-    shouldDispatchReceiveNextProps: false
+    shouldDispatchReceiveNextProps: whenDifferent([
+      'name',
+      'availableStates',
+      'defaultValue',
+      'selectedValue'
+    ])
   })(Choices)
 }
 

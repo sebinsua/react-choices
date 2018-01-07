@@ -37,7 +37,7 @@
 
   cursor: pointer;
 }
-.speed-choice__not-settable {
+.speed-choice__not-settable:not(.speed-choice__selected) {
   visibility: hidden;
   cursor: default;
 }
@@ -54,6 +54,7 @@
   outline: none;
   padding: 0;
   cursor: pointer;
+  overflow: hidden;
 
   height: 4px;
   width: 4px;

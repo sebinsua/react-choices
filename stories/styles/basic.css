@@ -1,6 +1,10 @@
 .choice {
   background-color: lightgrey;
 }
+.choice:focus {
+  outline-color: transparent;
+  outline-style: none;
+}
 .choice.choice__selected {
   background-color: red;
   color: white;

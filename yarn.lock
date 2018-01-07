@@ -2250,9 +2250,9 @@ conventional-commits-parser@^2.1.0:
     through2 "^2.0.0"
     trim-off-newlines "^1.0.0"
 
-conventional-component@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/conventional-component/-/conventional-component-0.4.0.tgz#a7694ff1da525d7a2457b5dd7b11b81ac3f9874a"
+conventional-component@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/conventional-component/-/conventional-component-0.5.1.tgz#13a4ad6d18510f069de0b8a1b0084c58f40fed6f"
 
 conventional-recommended-bump@^1.0.0:
   version "1.1.0"

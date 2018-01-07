@@ -18,3 +18,6 @@ export function compose(...funcs) {
 
   return funcs.reduce((a, b) => (...args) => a(b(...args)))
 }
+
+export const whenDifferent = (connectableProps = []) => (props, nextProps) =>
+  connectableProps.some(prop => props[prop] !== nextProps[prop])

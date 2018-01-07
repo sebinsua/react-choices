@@ -81,7 +81,7 @@ const reducer = (state = initialState, action) => {
         name: action.payload.name,
         availableStates: action.payload.availableStates,
         defaultValue: action.payload.defaultValue,
-        selectedValue: action.payload.value
+        selectedValue: action.payload.selectedValue
       }
     }
     case PREVIOUS_VALUE: {

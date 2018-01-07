@@ -90,7 +90,7 @@
   margin-left: -4px;
 }
 
-.speed-choice__focused .speed-choice__input {
+.speed-choice__focused .speed-choice__input, .speed-choice__input:focus {
   display: inline-block;
   border: 2px solid lightgreen;
 }

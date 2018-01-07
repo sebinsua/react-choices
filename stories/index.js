@@ -32,43 +32,37 @@ choices.add('with default template', () => (
 ))
 
 choices.add('with slider-like template', () => {
-  function SpeedChoice({
-    value,
-    label,
-    notSettable = false,
-    focused = false,
-    hovered = false,
-    selected = false,
-    id = `speed-choice-${value}`,
-    inputClassName,
+  function ChoiceItem({
+    state,
     onMouseOver,
-    onClick
+    onClick,
+    getItemProps,
+    getItemInputProps
   }) {
     return (
       <div
-        id={id}
+        id={`SpeedChoices__item-${state.value}`}
+        {...getItemProps(state)}
+        className={cx('SpeedChoices__item', {
+          'SpeedChoices__item--not-settable': state.notSettable,
+          'SpeedChoices__item--focused': state.focused,
+          'SpeedChoices__item--hovered': state.hovered,
+          'SpeedChoices__item--selected': state.selected
+        })}
+        aria-labelledby={`SpeedChoices__item__label-${state.value}`}
         onMouseOver={onMouseOver}
         onClick={onClick}
-        className={cx('speed-choice', {
-          'speed-choice--not-settable': notSettable,
-          'speed-choice--focused': focused,
-          'speed-choice--hovered': hovered,
-          'speed-choice--selected': selected
-        })}
-        role="radio"
-        aria-checked={selected ? 'true' : 'false'}
-        aria-labelledby={`speed-choice__label-${value}`}
       >
-        <div className="speed-choice__input-container">
+        <div className="SpeedChoices__item__input-container">
           <button
-            tabIndex={selected ? 0 : -1}
-            className={cx('speed-choice__input', inputClassName)}
+            {...getItemInputProps(state)}
+            className={cx('SpeedChoices__item__input', state.inputClassName)}
           >
             <span
-              id={`speed-choice__label-${value}`}
-              className="speed-choice__label"
+              id={`SpeedChoices__item__label-${state.value}`}
+              className="SpeedChoices__item__label"
             >
-              {label}
+              {state.label}
             </span>
           </button>
         </div>
@@ -77,7 +71,7 @@ choices.add('with slider-like template', () => {
   }
 
   function HorizontalBar() {
-    return <div className="speed-choices-horizontal-bar" />
+    return <div className="SpeedChoices__horizontal-bar" />
   }
 
   return (
@@ -86,6 +80,7 @@ choices.add('with slider-like template', () => {
       <input type="text" name="thing_2" defaultValue="fields" />
       <Choices
         name="slider_like_speed"
+        blockName="SpeedChoices"
         label="Speed"
         availableStates={[
           { value: '<S', label: '', settable: false },
@@ -98,39 +93,38 @@ choices.add('with slider-like template', () => {
         ]}
         defaultValue="M"
       >
-        {({ name, label, states, selectedValue, setValue, hoverValue }) => (
-          <div className="speed-choices-container">
-            <div
-              className="speed-choices"
-              role="radiogroup"
-              aria-labelledby={`speed-choices__label-${name}`}
-              aria-activedescendant={`speed-choice-${selectedValue}`}
-            >
+        {({
+          label,
+          states,
+          setValue,
+          hoverValue,
+          getContainerProps,
+          getContainerLabelProps,
+          getItemProps,
+          getItemInputProps
+        }) => (
+          <div className="SpeedChoices">
+            <div {...getContainerProps()} className="SpeedChoices__container">
               <div
-                id={`speed-choices__label-${name}`}
-                className="speed-choices__label"
+                {...getContainerLabelProps()}
+                className="SpeedChoices__label"
               >
                 {label}
               </div>
-              <div className="speed-choices__items">
+              <div className="SpeedChoices__items">
                 {states.map((state, idx) => (
-                  <SpeedChoice
-                    key={`speed-choice-${idx}`}
-                    id={`speed-choice-${state.value}`}
-                    value={state.value}
-                    label={state.label}
-                    notSettable={state.notSettable}
-                    focused={state.focused}
-                    hovered={state.hovered}
-                    selected={state.selected}
-                    inputClassName={state.inputClassName}
+                  <ChoiceItem
+                    key={`SpeedChoices__item-${idx}`}
+                    state={state}
+                    getItemProps={getItemProps}
+                    getItemInputProps={getItemInputProps}
                     onMouseOver={hoverValue.bind(null, state.value)}
                     onClick={setValue.bind(null, state.value)}
                   />
                 ))}
               </div>
             </div>
-            <div className="speed-choices__background">
+            <div className="SpeedChoices__background">
               <HorizontalBar />
             </div>
           </div>

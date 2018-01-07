@@ -1,6 +1,6 @@
 {
   "name": "react-choices",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Component to build simple, flexible, and accessible choice components",
   "entry": "src/index.js",
   "main": "index.js",

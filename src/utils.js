@@ -1,4 +1,9 @@
 export const KEYCODE = {
+  NUMPAD_2: 98,
+  NUMPAD_4: 100,
+  NUMPAD_6: 102,
+  NUMPAD_8: 104,
+
   DOWN: 40,
   LEFT: 37,
   RIGHT: 39,

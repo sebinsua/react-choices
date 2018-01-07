@@ -6,6 +6,25 @@ import ChoicesDisplay from './ChoicesDisplay'
 
 const toInputClassName = state => `Choices__input-${state.value}`
 
+const defaultGetKeyCodeHandler = (keyCode, parentInstance) => {
+  switch (keyCode) {
+    case KEYCODE.NUMPAD_2:
+    case KEYCODE.NUMPAD_4:
+    case KEYCODE.DOWN:
+    case KEYCODE.LEFT:
+      return parentInstance.focusPreviousValue
+    case KEYCODE.NUMPAD_8:
+    case KEYCODE.NUMPAD_6:
+    case KEYCODE.UP:
+    case KEYCODE.RIGHT:
+      return parentInstance.focusNextValue
+    case KEYCODE.ESC:
+      return parentInstance.resetValue
+    default:
+      return () => undefined
+  }
+}
+
 const createStates = (availableStates = []) => {
   return availableStates.map(availableState => ({
     ...availableState,
@@ -21,7 +40,10 @@ class EventDetectionContainer extends Component {
 
     let handle = () => undefined
     if (isActiveControl) {
-      handle = this.props.getKeyCodeHandler(event.keyCode)
+      handle = this.props.getKeyCodeHandler(
+        event.keyCode,
+        this.props.parentInstance
+      )
     }
 
     return handle(event)
@@ -30,12 +52,20 @@ class EventDetectionContainer extends Component {
   unfocusWhenOutside = event => {
     const isActiveControl = this.container.contains(document.activeElement)
     if (!isActiveControl) {
-      this.props.unfocusValue()
+      const unfocusValue =
+        this.props.unfocusValue || this.props.parentInstance.unfocusValue
+      if (unfocusValue) {
+        return unfocusValue()
+      }
     }
   }
 
   unhoverWhenOutside = event => {
-    this.props.unhoverValue()
+    const unhoverValue =
+      this.props.unhoverValue || this.props.parentInstance.unhoverValue
+    if (unhoverValue) {
+      return unhoverValue()
+    }
   }
 
   componentDidMount() {
@@ -124,6 +154,9 @@ function withLogic(Template = ChoicesDisplay) {
     }
 
     render() {
+      const getKeyCodeHandler =
+        this.props.getKeyCodeHandler || defaultGetKeyCodeHandler
+
       const templateProps = {
         name: this.props.name,
         states: createStates(this.props.availableStates),
@@ -155,20 +188,8 @@ function withLogic(Template = ChoicesDisplay) {
 
       return (
         <EventDetectionContainer
-          getKeyCodeHandler={keyCode => {
-            switch (keyCode) {
-              case KEYCODE.DOWN:
-              case KEYCODE.LEFT:
-                return this.focusPreviousValue
-              case KEYCODE.UP:
-              case KEYCODE.RIGHT:
-                return this.focusNextValue
-              case KEYCODE.ESC:
-                return this.resetValue
-              default:
-                return () => undefined
-            }
-          }}
+          parentInstance={this}
+          getKeyCodeHandler={getKeyCodeHandler}
           unfocusValue={this.unfocusValue}
           unhoverValue={this.unhoverValue}
         >

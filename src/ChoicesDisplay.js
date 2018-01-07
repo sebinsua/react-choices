@@ -2,40 +2,35 @@ import React from 'react'
 import cx from 'classnames-es'
 
 const ChoicesDisplay = ({
-  name,
   label,
   states,
-  selectedValue,
   setValue,
   hoverValue,
   previousValue,
-  nextValue
+  nextValue,
+  getContainerProps,
+  getContainerLabelProps,
+  getItemProps,
+  getItemInputProps
 }) => (
-  <div
-    className="choices"
-    role="radiogroup"
-    aria-labelledby={`choices__label-${name}`}
-    aria-activedescendant={`choice-${selectedValue}`}
-  >
-    <div id={`choices__label-${name}`} className="choices__label">
+  <div {...getContainerProps()} className="Choices__container">
+    <div {...getContainerLabelProps()} className="Choices__label">
       {label}
     </div>
-    <div className="choices__items">
+    <div className="Choices__items">
       <button onClick={previousValue}>{'<'}</button>
       {states.map((state, idx) => (
         <button
-          key={`choice-${idx}`}
-          id={`choice-${state.value}`}
-          tabIndex={state.selected ? 0 : -1}
-          className={cx('choice', state.inputClassName, {
-            'choice--focused': state.focused,
-            'choice--hovered': state.hovered,
-            'choice--selected': state.selected
+          key={`Choices__item-${idx}`}
+          {...getItemProps(state)}
+          {...getItemInputProps(state)}
+          className={cx('Choices__item', state.inputClassName, {
+            'Choices__item--focused': state.focused,
+            'Choices__item--hovered': state.hovered,
+            'Choices__item--selected': state.selected
           })}
           onMouseOver={hoverValue.bind(null, state.value)}
           onClick={setValue.bind(null, state.value)}
-          role="radio"
-          aria-checked={state.selected ? 'true' : 'false'}
         >
           {state.label}
         </button>

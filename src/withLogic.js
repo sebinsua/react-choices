@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { withRenderProp, withLifecycleStateLogic } from 'conventional-component'
+import cx from 'classnames-es'
 import { KEYCODE, whenDifferent } from './utils'
 
+import { COMPONENT_NAME } from './Choices'
 import ChoicesDisplay from './ChoicesDisplay'
 
-const toInputClassName = state => `Choices__input-${state.value}`
+const toInputClassName = state =>
+  `${[state.blockName, state.name].join('-')}__input-${state.value}`
 
 const defaultGetKeyCodeHandler = (keyCode, parentInstance) => {
   switch (keyCode) {
@@ -37,7 +40,11 @@ const createStates = (props = {}, availableStates = []) => {
     hovered: availableState.value === props.hoveredValue,
     selected:
       availableState.value === (props.selectedValue || props.defaultValue),
-    inputClassName: toInputClassName(availableState)
+    inputClassName: toInputClassName({
+      ...availableState,
+      blockName: props.blockName,
+      name: props.name
+    })
   }))
 }
 
@@ -103,6 +110,10 @@ class EventDetectionContainer extends Component {
 
 function withLogic(Template = ChoicesDisplay) {
   class Choices extends Component {
+    static defaultProps = {
+      blockName: COMPONENT_NAME
+    }
+
     componentWillReceiveProps(nextProps) {
       const hasNewSelectedValue =
         this.props.selectedValue &&
@@ -115,14 +126,47 @@ function withLogic(Template = ChoicesDisplay) {
       }
     }
 
+    createClassName = (element, modifier = undefined) =>
+      `${this.props.blockName}__${element}` + (modifier ? `--${modifier}` : '')
+
     focusInputElement = value => {
       const el = (document.getElementsByClassName(
-        toInputClassName({ value })
+        toInputClassName({
+          blockName: this.props.blockName,
+          name: this.props.name,
+          value
+        })
       ) || [])[0]
       if (el) {
         requestAnimationFrame(() => el.focus())
       }
     }
+
+    getContainerProps = () => ({
+      className: this.createClassName('container'),
+      role: 'radiogroup',
+      'aria-labelledby': this.createClassName(`label-${this.props.name}`),
+      'aria-activedescendant': this.createClassName(
+        `item-${this.props.selectedValue}`
+      )
+    })
+
+    getContainerLabelProps = () => ({
+      id: this.createClassName(`label-${this.props.name}`),
+      className: this.createClassName('label')
+    })
+
+    getItemProps = state => ({
+      id: this.createClassName(`item-${state.value}`),
+      className: this.createClassName('item'),
+      role: 'radio',
+      'aria-checked': state.selected ? 'true' : 'false'
+    })
+
+    getItemInputProps = state => ({
+      tabIndex: state.selected ? 0 : -1,
+      className: cx(this.createClassName('item__input'), state.inputClassName)
+    })
 
     resetValue = event => {
       this.props.setValue(this.props.defaultValue)
@@ -167,8 +211,15 @@ function withLogic(Template = ChoicesDisplay) {
         this.props.getKeyCodeHandler || defaultGetKeyCodeHandler
 
       const templateProps = {
+        createClassName: this.createClassName,
+        getContainerProps: this.getContainerProps,
+        getContainerLabelProps: this.getContainerLabelProps,
+        getItemProps: this.getItemProps,
+        getItemInputProps: this.getItemInputProps,
+
         name: this.props.name,
         label: this.props.label,
+        blockName: this.props.blockName,
         states: createStates(this.props, this.props.availableStates),
         defaultValue: this.props.defaultValue,
         focusedValue: this.props.focusedValue,
@@ -213,6 +264,7 @@ function withLogic(Template = ChoicesDisplay) {
     shouldDispatchReceiveNextProps: whenDifferent([
       'name',
       'label',
+      'blockName',
       'availableStates',
       'defaultValue',
       'selectedValue'

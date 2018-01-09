@@ -112,9 +112,9 @@ choices.add('with slider-like template', () => {
                 {label}
               </div>
               <div className="SpeedChoices__items">
-                {states.map((state, idx) => (
+                {states.map(state => (
                   <ChoiceItem
-                    key={`SpeedChoices__item-${idx}`}
+                    key={state.key}
                     state={state}
                     getItemProps={getItemProps}
                     getItemInputProps={getItemInputProps}

@@ -31,6 +31,7 @@ const defaultGetKeyCodeHandler = (keyCode, parentInstance) => {
 const createStates = (props = {}, availableStates = []) => {
   return availableStates.map(availableState => ({
     ...availableState,
+    key: `${props.blockName}-${props.name}__item-${availableState.value}`,
     label:
       typeof availableState.label !== 'undefined'
         ? availableState.label
@@ -157,6 +158,7 @@ function withLogic(Template = ChoicesDisplay) {
     })
 
     getItemProps = state => ({
+      key: state.key,
       id: this.createClassName(`item-${state.value}`),
       className: this.createClassName('item'),
       role: 'radio',

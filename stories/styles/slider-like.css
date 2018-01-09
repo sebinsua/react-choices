@@ -148,7 +148,7 @@
  .default-theme .SpeedChoices__item--hovered .SpeedChoices__item__input {
    border: var(--item-border-size) solid var(--item-hovered-border-color);
  }
- .default-theme .SpeedChoices__item--focused .SpeedChoices__item__input, .SpeedChoices__item__input:focus {
+ .default-theme .SpeedChoices__item--focused .SpeedChoices__item__input, .default-theme .SpeedChoices__item__input:focus {
    border: var(--item-border-size) solid var(--item-focused-border-color);
  }
  .default-theme .SpeedChoices__item--selected .SpeedChoices__item__input {

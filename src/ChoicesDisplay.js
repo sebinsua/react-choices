@@ -19,9 +19,9 @@ const ChoicesDisplay = ({
     </div>
     <div className="Choices__items">
       <button onClick={previousValue}>{'<'}</button>
-      {states.map((state, idx) => (
+      {states.map(state => (
         <button
-          key={`Choices__item-${idx}`}
+          key={state.key}
           {...getItemProps(state)}
           {...getItemInputProps(state)}
           className={cx('Choices__item', state.inputClassName, {

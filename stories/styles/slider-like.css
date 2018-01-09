@@ -57,7 +57,6 @@
   align-self: center;
   height: 100%;
   flex: 1 0 10%;
-
   cursor: pointer;
 }
 .SpeedChoices__item--not-settable:not(.SpeedChoices__item--selected) {
@@ -109,7 +108,6 @@
 
 .SpeedChoices__item--hovered .SpeedChoices__item__input {
   border-radius: var(--item-hovered-size);
-
   height: var(--item-hovered-size);
   width: var(--item-hovered-size);
 }

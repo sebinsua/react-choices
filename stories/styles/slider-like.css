@@ -124,7 +124,6 @@
 
 .SpeedChoices__item--selected .SpeedChoices__item__input {
   border-radius: var(--item-selected-size);
-
   height: var(--item-selected-size);
   width: var(--item-selected-size);
 }
@@ -135,7 +134,6 @@
 
 .SpeedChoices__item--selected.SpeedChoices__item--not-settable .SpeedChoices__item__input {
   border-radius: var(--item-selected-unsettable-size);
-
   height: var(--item-selected-unsettable-size);
   width: var(--item-selected-unsettable-size);
 }

@@ -75,7 +75,7 @@ choices.add('with slider-like template', () => {
   }
 
   return (
-    <div className="choices-container">
+    <div className="default-theme choices-container">
       <input type="text" name="thing_1" defaultValue="unrelated" />
       <input type="text" name="thing_2" defaultValue="fields" />
       <Choices

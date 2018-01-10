@@ -104,8 +104,8 @@ export type GetItemInputPropsFn = (
 ) => {
   tabIndex: 0 | -1,
   className: string,
-  disabled?: boolean,
-  readOnly?: boolean
+  disabled: boolean,
+  readOnly: boolean
 }
 
 export type ResetValueEventHandler<T = any> = (event: SyntheticEvent<T>) => void
@@ -131,8 +131,8 @@ export interface TemplateComponentProps {
   focusedValue?: Value;
   hoveredValue?: Value;
   selectedValue?: Value;
-  disabled?: boolean;
-  readOnly?: boolean;
+  disabled: boolean;
+  readOnly: boolean;
   resetValue: ResetValueEventHandler;
   setValue: SetValueEventHandler;
   hoverValue: HoverValueEventHandler;

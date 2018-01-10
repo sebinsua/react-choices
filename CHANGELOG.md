@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/sebinsua/react-choices/compare/v0.4.3...v0.5.0) (2018-01-10)
+
+
+### Features
+
+* disabled and readonly support ([3e701c1](https://github.com/sebinsua/react-choices/commit/3e701c1))
+
+
+
 <a name="0.4.3"></a>
 ## [0.4.3](https://github.com/sebinsua/react-choices/compare/v0.4.2...v0.4.3) (2018-01-10)
 

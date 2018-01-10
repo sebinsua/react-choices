@@ -4,6 +4,7 @@ import { ComponentType, SyntheticEvent } from 'react'
  * Domain
  */
 
+type BooleanString = 'true' | 'false'
 type Value = string
 interface KeyValueObject {
   [key: string]: any | void;
@@ -78,7 +79,9 @@ export type GetContainerPropsFn = () => {
   className: string,
   role: 'radiogroup',
   'aria-labelledby': string,
-  'aria-activedescendant': string
+  'aria-activedescendant': string,
+  'aria-disabled': BooleanString,
+  'aria-readonly': BooleanString
 }
 
 export type GetContainerLabelPropsFn = () => {
@@ -93,14 +96,16 @@ export type GetItemPropsFn = (
   id: string,
   className: string,
   role: 'radio',
-  'aria-checked': 'true' | 'false'
+  'aria-checked': BooleanString
 }
 
 export type GetItemInputPropsFn = (
   state: AvailableState
 ) => {
   tabIndex: 0 | -1,
-  className: string
+  className: string,
+  disabled?: boolean,
+  readOnly?: boolean
 }
 
 export type ResetValueEventHandler<T = any> = (event: SyntheticEvent<T>) => void
@@ -126,6 +131,8 @@ export interface TemplateComponentProps {
   focusedValue?: Value;
   hoveredValue?: Value;
   selectedValue?: Value;
+  disabled?: boolean;
+  readOnly?: boolean;
   resetValue: ResetValueEventHandler;
   setValue: SetValueEventHandler;
   hoverValue: HoverValueEventHandler;
@@ -150,6 +157,8 @@ export interface ChoicesComponentProps {
   focusedValue?: Value;
   hoveredValue?: Value;
   selectedValue?: Value;
+  disabled?: boolean;
+  readOnly?: boolean;
   onChange?: OnChangeFn;
   getKeyCodeHandler?: GetKeyCodeHandlerFn;
   render?: TemplateComponent;

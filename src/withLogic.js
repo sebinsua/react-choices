@@ -138,18 +138,23 @@ function withLogic(Template = ChoicesDisplay) {
           value
         })
       ) || [])[0]
-      if (el) {
+      if (el && this.props.disabled !== true) {
         requestAnimationFrame(() => el.focus())
       }
     }
 
     getContainerProps = () => ({
-      className: this.createClassName('container'),
+      className: cx(this.createClassName('container'), {
+        [this.createClassName('container', 'disabled')]: this.props.disabled,
+        [this.createClassName('container', 'readonly')]: this.props.readOnly
+      }),
       role: 'radiogroup',
       'aria-labelledby': this.createClassName(`label-${this.props.name}`),
       'aria-activedescendant': this.createClassName(
         `item-${this.props.selectedValue}`
-      )
+      ),
+      'aria-disabled': this.props.disabled ? 'true' : 'false',
+      'aria-readonly': this.props.readOnly ? 'true' : 'false'
     })
 
     getContainerLabelProps = () => ({
@@ -166,16 +171,21 @@ function withLogic(Template = ChoicesDisplay) {
     })
 
     getItemInputProps = state => ({
-      tabIndex: state.selected ? 0 : -1,
-      className: cx(this.createClassName('item__input'), state.inputClassName)
+      tabIndex: state.selected && this.props.disabled !== true ? 0 : -1,
+      className: cx(this.createClassName('item__input'), state.inputClassName),
+      disabled: this.props.disabled || false,
+      readOnly: this.props.readOnly || false
     })
 
     resetValue = event => {
+      event && event.preventDefault()
+      if (this.props.readOnly || this.props.disabled) return
       this.props.setValue(this.props.defaultValue)
     }
 
     setValue = (value, event) => {
       event && event.preventDefault()
+      if (this.props.readOnly || this.props.disabled) return
       this.props.setValue(value)
     }
 
@@ -183,6 +193,7 @@ function withLogic(Template = ChoicesDisplay) {
 
     hoverValue = (value, event) => {
       event && event.preventDefault()
+      if (this.props.disabled) return
       this.props.hoverValue(value)
     }
 
@@ -190,21 +201,25 @@ function withLogic(Template = ChoicesDisplay) {
 
     focusPreviousValue = event => {
       event && event.preventDefault()
+      if (this.props.disabled) return
       this.props.previousValue(false)
     }
 
     focusNextValue = event => {
       event && event.preventDefault()
+      if (this.props.disabled) return
       this.props.nextValue(false)
     }
 
     previousValue = event => {
       event && event.preventDefault()
+      if (this.props.readOnly || this.props.disabled) return
       this.props.previousValue(true)
     }
 
     nextValue = event => {
       event && event.preventDefault()
+      if (this.props.readOnly || this.props.disabled) return
       this.props.nextValue(true)
     }
 
@@ -227,6 +242,8 @@ function withLogic(Template = ChoicesDisplay) {
         focusedValue: this.props.focusedValue,
         hoveredValue: this.props.hoveredValue,
         selectedValue: this.props.selectedValue,
+        disabled: this.props.disabled || false,
+        readOnly: this.props.readOnly || false,
 
         resetValue: this.resetValue,
         setValue: this.setValue,

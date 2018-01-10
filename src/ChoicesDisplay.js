@@ -4,6 +4,8 @@ import cx from 'classnames-es'
 const ChoicesDisplay = ({
   label,
   states,
+  disabled,
+  readOnly,
   setValue,
   hoverValue,
   previousValue,
@@ -13,12 +15,20 @@ const ChoicesDisplay = ({
   getItemProps,
   getItemInputProps
 }) => (
-  <div {...getContainerProps()} className="Choices__container">
+  <div
+    {...getContainerProps()}
+    className={cx('Choices__container', {
+      'Choices__container--disabled': disabled,
+      'Choices__container--readonly': readOnly
+    })}
+  >
     <div {...getContainerLabelProps()} className="Choices__label">
       {label}
     </div>
     <div className="Choices__items">
-      <button onClick={previousValue}>{'<'}</button>
+      <button onClick={previousValue} disabled={disabled} readOnly={readOnly}>
+        {'<'}
+      </button>
       {states.map(state => (
         <button
           key={state.key}
@@ -35,7 +45,9 @@ const ChoicesDisplay = ({
           {state.label}
         </button>
       ))}
-      <button onClick={nextValue}>{'>'}</button>
+      <button onClick={nextValue} disabled={disabled} readOnly={readOnly}>
+        {'>'}
+      </button>
     </div>
   </div>
 )

@@ -32,6 +32,52 @@ choices.add('with default template', () => (
   </div>
 ))
 
+choices.add('with disabled state', () => (
+  <div className="choices-container">
+    <input type="text" name="thing_1" defaultValue="unrelated" />
+    <input type="text" name="thing_2" defaultValue="fields" />
+    <hr />
+    <Choices
+      name="basic_speed"
+      label="Speed"
+      availableStates={[
+        { value: '<S', settable: false },
+        { value: 'S' },
+        { value: 'S<M', settable: false },
+        { value: 'M' },
+        { value: 'M<F', settable: false },
+        { value: 'F' },
+        { value: '>F', settable: false }
+      ]}
+      defaultValue="M"
+      disabled
+    />
+  </div>
+))
+
+choices.add('with readonly state', () => (
+  <div className="choices-container">
+    <input type="text" name="thing_1" defaultValue="unrelated" />
+    <input type="text" name="thing_2" defaultValue="fields" />
+    <hr />
+    <Choices
+      name="basic_speed"
+      label="Speed"
+      availableStates={[
+        { value: '<S', settable: false },
+        { value: 'S' },
+        { value: 'S<M', settable: false },
+        { value: 'M' },
+        { value: 'M<F', settable: false },
+        { value: 'F' },
+        { value: '>F', settable: false }
+      ]}
+      defaultValue="M"
+      readOnly
+    />
+  </div>
+))
+
 choices.add('with slider-like template', () => {
   function ChoiceItem({
     state,

@@ -20,7 +20,6 @@
 .SpeedChoices {
   position: relative;
   width: var(--control-width);
-  padding: 5px; /* TODO: This is temporary... */
 }
 
 .SpeedChoices__background {
@@ -139,24 +138,25 @@
 /**
  * Default Theme
  */
- .default-theme .SpeedChoices__horizontal-bar {
-   background-color: var(--horizontal-bar-bg-color);
- }
- .default-theme .SpeedChoices__item__input {
-   background-color: var(--item-bg-color);
- }
- .default-theme .SpeedChoices__item--hovered .SpeedChoices__item__input {
-   border: var(--item-border-size) solid var(--item-hovered-border-color);
- }
- .default-theme .SpeedChoices__item--focused .SpeedChoices__item__input, .default-theme .SpeedChoices__item__input:focus {
-   border: var(--item-border-size) solid var(--item-focused-border-color);
- }
- .default-theme .SpeedChoices__item--selected .SpeedChoices__item__input {
-   background-color: var(--item-selected-bg-color);
- }
- .default-theme .SpeedChoices__item--selected .SpeedChoices__item__label {
-     color: var(--item-label-color);
- }
- .default-theme .SpeedChoices__item--selected.SpeedChoices__item--not-settable .SpeedChoices__item__input {
-   background-color: var(--item-selected-unsettable-bg-color);
- }
+
+.default-theme .SpeedChoices__horizontal-bar {
+  background-color: var(--horizontal-bar-bg-color);
+}
+.default-theme .SpeedChoices__item__input {
+  background-color: var(--item-bg-color);
+}
+.default-theme .SpeedChoices__item--hovered .SpeedChoices__item__input {
+  border: var(--item-border-size) solid var(--item-hovered-border-color);
+}
+.default-theme .SpeedChoices__item--focused .SpeedChoices__item__input, .default-theme .SpeedChoices__item__input:focus {
+  border: var(--item-border-size) solid var(--item-focused-border-color);
+}
+.default-theme .SpeedChoices__item--selected .SpeedChoices__item__input {
+  background-color: var(--item-selected-bg-color);
+}
+.default-theme .SpeedChoices__item--selected .SpeedChoices__item__label {
+  color: var(--item-label-color);
+}
+.default-theme .SpeedChoices__item--selected.SpeedChoices__item--not-settable .SpeedChoices__item__input {
+  background-color: var(--item-selected-unsettable-bg-color);
+}

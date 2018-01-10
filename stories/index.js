@@ -14,6 +14,7 @@ choices.add('with default template', () => (
   <div className="choices-container">
     <input type="text" name="thing_1" defaultValue="unrelated" />
     <input type="text" name="thing_2" defaultValue="fields" />
+    <hr />
     <Choices
       name="basic_speed"
       label="Speed"
@@ -78,6 +79,7 @@ choices.add('with slider-like template', () => {
     <div className="default-theme choices-container">
       <input type="text" name="thing_1" defaultValue="unrelated" />
       <input type="text" name="thing_2" defaultValue="fields" />
+      <hr />
       <Choices
         name="slider_like_speed"
         blockName="SpeedChoices"

@@ -1,6 +1,6 @@
 import { withActionIdentity } from 'conventional-component'
 
-const prefix = 'Choices'
+const prefix = 'react-choices'
 
 export const SET_VALUE = `${prefix}/SET_VALUE`
 export const HOVER_VALUE = `${prefix}/HOVER_VALUE`

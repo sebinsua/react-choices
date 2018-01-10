@@ -103,14 +103,19 @@ export type GetItemInputPropsFn = (
   className: string
 }
 
-export type ResetValueEventHandler = (event: SyntheticEvent) => void
-export type SetValueEventHandler = (value: Value, event: SyntheticEvent) => void
-export type HoverValueEventHandler = (
+export type ResetValueEventHandler<T = any> = (event: SyntheticEvent<T>) => void
+export type SetValueEventHandler<T = any> = (
   value: Value,
-  event: SyntheticEvent
+  event: SyntheticEvent<T>
 ) => void
-export type PreviousValueEventHandler = (event: SyntheticEvent) => void
-export type NextValueEventHandler = (event: SyntheticEvent) => void
+export type HoverValueEventHandler<T = any> = (
+  value: Value,
+  event: SyntheticEvent<T>
+) => void
+export type PreviousValueEventHandler<T = any> = (
+  event: SyntheticEvent<T>
+) => void
+export type NextValueEventHandler<T = any> = (event: SyntheticEvent<T>) => void
 export type CreateClassNameFn = (className: string) => string
 export interface TemplateComponentProps {
   name: string;

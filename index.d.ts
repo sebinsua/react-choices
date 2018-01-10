@@ -1,11 +1,11 @@
-import { Component } from 'react'
+import { ComponentType } from 'react'
 
 /**
  * Domain
  */
 
 type Value = string
-interface AvailableState {
+export interface AvailableState {
   value: Value;
   label?: string;
   settable?: boolean;
@@ -16,36 +16,36 @@ interface AvailableState {
  */
 
 type Action<Type, Payload> = { type: Type, payload: Payload }
-type SetValueAction = Action<'react-choices/SET_VALUE', Value>
-type HoverValueAction = Action<'react-choices/HOVER_VALUE', Value>
-type PreviousValueAction = Action<'react-choices/PREVIOUS_VALUE', boolean>
-type NextValueAction = Action<'react-choices/NEXT_VALUE', boolean>
-type ChoicesActions =
+export type SetValueAction = Action<'react-choices/SET_VALUE', Value>
+export type HoverValueAction = Action<'react-choices/HOVER_VALUE', Value>
+export type PreviousValueAction = Action<'react-choices/PREVIOUS_VALUE', boolean>
+export type NextValueAction = Action<'react-choices/NEXT_VALUE', boolean>
+export type ChoicesActions =
   | SetValueAction
   | HoverValueAction
   | PreviousValueAction
   | NextValueAction
 
-type SetValueFn = (value: Value) => SetValueAction
-type HoverValueFn = (value: Value) => HoverValueAction
-type PreviousValueFn = (shouldSelect: boolean) => PreviousValueAction
-type NextValueFn = (shouldSelect: boolean) => NextValueAction
+export type SetValueFn = (value: Value) => SetValueAction
+export type HoverValueFn = (value: Value) => HoverValueAction
+export type PreviousValueFn = (shouldSelect: boolean) => PreviousValueAction
+export type NextValueFn = (shouldSelect: boolean) => NextValueAction
 
 /**
  * Reducer
  */
 
-interface ChoicesReducerState {
-  name: string;
-  label: string;
-  blockName: string;
-  states: Array<AvailableState>;
+export interface ChoicesReducerState {
+  name?: string;
+  label?: string;
+  blockName?: string;
+  states: ReadonlyArray<AvailableState>;
   defaultValue?: Value;
   focusedValue?: Value;
   hoveredValue?: Value;
   selectedValue?: Value;
 }
-type ChoicesReducer = (
+export type ChoicesReducer = (
   state: ChoicesReducerState,
   action: ChoicesActions
 ) => ChoicesReducerState
@@ -54,19 +54,19 @@ type ChoicesReducer = (
  * Component
  */
 
-type GetContainerPropsFn = () => {
+export type GetContainerPropsFn = () => {
   className: string,
   role: 'radiogroup',
   'aria-labelledby': string,
   'aria-activedescendant': string
 }
 
-type GetContainerLabelPropsFn = () => {
+export type GetContainerLabelPropsFn = () => {
   id: string,
   className: string
 }
 
-type GetItemPropsFn = (
+export type GetItemPropsFn = (
   state: AvailableState
 ) => {
   key: string,
@@ -76,18 +76,18 @@ type GetItemPropsFn = (
   'aria-checked': 'true' | 'false'
 }
 
-type GetItemInputPropsFn = (
+export type GetItemInputPropsFn = (
   state: AvailableState
 ) => {
   tabIndex: 0 | -1,
   className: string
 }
 
-interface TemplateComponentProps {
+export interface TemplateComponentProps {
   name: string;
   label: string;
   blockName: string;
-  states: Array<AvailableState>;
+  states: ReadonlyArray<AvailableState>;
   defaultValue?: Value;
   focusedValue?: Value;
   hoveredValue?: Value;
@@ -101,29 +101,29 @@ interface TemplateComponentProps {
   getItemProps: GetItemPropsFn;
   getItemInputProps: GetItemInputPropsFn;
 }
-type TemplateComponent = Component<TemplateComponentProps>
+export type TemplateComponent = ComponentType<TemplateComponentProps>
 
-type OnChangeFn = (value: string) => any
-interface ChoicesComponentProps {
+export type OnChangeFn = (value: string) => any
+export interface ChoicesComponentProps {
   name: string;
   label: string;
-  blockName: string;
-  availableStates: Array<AvailableState>;
+  blockName?: string;
+  availableStates: ReadonlyArray<AvailableState>;
   defaultValue?: Value;
   focusedValue?: Value;
   hoveredValue?: Value;
   selectedValue?: Value;
-  onChange: OnChangeFn;
+  onChange?: OnChangeFn;
   render?: TemplateComponent;
   children?: TemplateComponent;
 }
-type ChoicesComponent = Component<ChoicesComponentProps>
+export type ChoicesComponent = ComponentType<ChoicesComponentProps>
 
 /**
  * WithLogicHoc
  */
 
-type WithLogicHoc = (Template: TemplateComponent) => ChoicesComponent
+export type WithLogicHoc = (Template?: TemplateComponent) => ChoicesComponent
 
 /**
  * Exports

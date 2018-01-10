@@ -9,6 +9,7 @@ export {
   reducer,
   Template,
   withLogic,
+  Choices,
   REDUCER_NAME,
   COMPONENT_NAME,
   COMPONENT_KEY

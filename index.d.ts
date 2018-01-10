@@ -1,14 +1,31 @@
-import { ComponentType } from 'react'
+import { ComponentType, SyntheticEvent } from 'react'
 
 /**
  * Domain
  */
 
 type Value = string
-export interface AvailableState {
+interface KeyValueObject {
+  [key: string]: any | void;
+}
+
+export interface AvailableState<AdditionalData = KeyValueObject> {
   value: Value;
   label?: string;
   settable?: boolean;
+  additionalData?: AdditionalData;
+}
+export interface State<AdditionalData = KeyValueObject> {
+  key: string;
+  value: Value;
+  label?: string;
+  settable?: boolean;
+  notSettable: boolean;
+  focused: boolean;
+  hovered: boolean;
+  selected: boolean;
+  inputClassName: string;
+  additionalData?: AdditionalData;
 }
 
 /**
@@ -18,7 +35,10 @@ export interface AvailableState {
 type Action<Type, Payload> = { type: Type, payload: Payload }
 export type SetValueAction = Action<'react-choices/SET_VALUE', Value>
 export type HoverValueAction = Action<'react-choices/HOVER_VALUE', Value>
-export type PreviousValueAction = Action<'react-choices/PREVIOUS_VALUE', boolean>
+export type PreviousValueAction = Action<
+  'react-choices/PREVIOUS_VALUE',
+  boolean
+>
 export type NextValueAction = Action<'react-choices/NEXT_VALUE', boolean>
 export type ChoicesActions =
   | SetValueAction
@@ -83,19 +103,30 @@ export type GetItemInputPropsFn = (
   className: string
 }
 
+export type ResetValueEventHandler = (event: SyntheticEvent) => void
+export type SetValueEventHandler = (value: Value, event: SyntheticEvent) => void
+export type HoverValueEventHandler = (
+  value: Value,
+  event: SyntheticEvent
+) => void
+export type PreviousValueEventHandler = (event: SyntheticEvent) => void
+export type NextValueEventHandler = (event: SyntheticEvent) => void
+export type CreateClassNameFn = (className: string) => string
 export interface TemplateComponentProps {
   name: string;
   label: string;
   blockName: string;
-  states: ReadonlyArray<AvailableState>;
+  states: ReadonlyArray<State>;
   defaultValue?: Value;
   focusedValue?: Value;
   hoveredValue?: Value;
   selectedValue?: Value;
-  setValue: SetValueFn;
-  hoverValue: HoverValueFn;
-  previousValue: PreviousValueFn;
+  resetValue: ResetValueEventHandler;
+  setValue: SetValueEventHandler;
+  hoverValue: HoverValueEventHandler;
+  previousValue: PreviousValueEventHandler;
   nextValue: NextValueFn;
+  createClassName: CreateClassNameFn;
   getContainerProps: GetContainerPropsFn;
   getContainerLabelProps: GetContainerLabelPropsFn;
   getItemProps: GetItemPropsFn;
@@ -103,6 +134,7 @@ export interface TemplateComponentProps {
 }
 export type TemplateComponent = ComponentType<TemplateComponentProps>
 
+export type GetKeyCodeHandlerFn = (keyCode: number) => Function
 export type OnChangeFn = (value: string) => any
 export interface ChoicesComponentProps {
   name: string;
@@ -114,6 +146,7 @@ export interface ChoicesComponentProps {
   hoveredValue?: Value;
   selectedValue?: Value;
   onChange?: OnChangeFn;
+  getKeyCodeHandler?: GetKeyCodeHandlerFn;
   render?: TemplateComponent;
   children?: TemplateComponent;
 }
